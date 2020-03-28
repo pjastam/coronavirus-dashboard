@@ -1,19 +1,21 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-**The Coronavirus Dashboard: the case of Belgium**
+**The Coronavirus Dashboard: the case of the Netherlands**
 
-This Coronavirus dashboard: the case of Belgium provides an overview of
-the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic for Belgium.
-This dashboard is built with R using the R Makrdown framework and was
-adapted from this
+This dashboard provides an overview of the 2019 Novel Coronavirus
+COVID-19 (2019-nCoV) epidemic for the Netherlands. It is built with R
+using the R Makrdown framework and was adapted from [The Coronavirus
+Dashboard: the case of
+Belgium](https://github.com/AntoineSoetewey/coronavirus_dashboard) by
+Antoine Soetewey, which is an adaptation of the original
 [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/) by
 Rami Krispin.
 
 **Code**
 
 The code behind this dashboard is available on
-[GitHub](https://github.com/AntoineSoetewey/coronavirus_dashboard).
+[GitHub](https://github.com/pjastam/coronavirus_dashboard).
 
 **Data**
 
@@ -26,17 +28,11 @@ Engineering (JHU CCSE) Coronavirus
 
 **Contact**
 
-For any question or feedback, you can [contact
-me](https://www.statsandr.com/contact/). More information about this
-dashboard can be found in this
-[article](https://www.statsandr.com/blog/).
+For any question or feedback, you can contact me at my GitHub mail
+address or send me a direct message on Twitter @pjastam. More
+information about this dashboard can be found in this
+[article](https://www.statsandr.com/blog/how-to-create-a-simple-coronavirus-dashboard-specific-to-your-country-in-r/).
 
 **Update**
 
-The dashboard has been updated on Saturday March 21, 2020.
-
-<br>
-
-*Go back to [www.statsandr.com](https://www.statsandr.com/) (blog) or
-[www.antoinesoetewey.com](https://www.antoinesoetewey.com/) (personal
-website)*.
+The dashboard has been updated on Saturday March 28, 2020.

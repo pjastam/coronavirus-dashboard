@@ -1,6 +1,6 @@
 ---
-title: "Coronavirus in Belgium"
-author: "Antoine Soetewey"
+title: "Coronavirus in the Netherlands"
+author: "Piet Stam"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -31,7 +31,7 @@ death_color <- "red"
 #------------------ Data ------------------
 df <- coronavirus %>%
   # dplyr::filter(date == max(date)) %>%
-  dplyr::filter(Country.Region == "Belgium") %>%
+  dplyr::filter(Country.Region == "Netherlands") %>%
   dplyr::group_by(Country.Region, type) %>%
   dplyr::summarise(total = sum(cases)) %>%
   tidyr::pivot_wider(
@@ -49,7 +49,7 @@ df <- coronavirus %>%
   dplyr::mutate(country = factor(country, levels = country))
 
 df_daily <- coronavirus %>%
-  dplyr::filter(Country.Region == "Belgium") %>%
+  dplyr::filter(Country.Region == "Netherlands") %>%
   dplyr::group_by(date, type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(
@@ -124,7 +124,7 @@ valueBox(
 Row
 -----------------------------------------------------------------------
 
-### **Daily cumulative cases by type** (Belgium only)
+### **Daily cumulative cases by type** (Netherlands only)
     
 ```{r}
 plotly::plot_ly(data = df_daily) %>%
@@ -149,7 +149,7 @@ plotly::plot_ly(data = df_daily) %>%
     marker = list(color = death_color)
   ) %>%
   plotly::add_annotations(
-    x = as.Date("2020-02-04"),
+    x = as.Date("2020-02-27"),
     y = 1,
     text = paste("First case"),
     xref = "x",
@@ -162,7 +162,7 @@ plotly::plot_ly(data = df_daily) %>%
     ay = -90
   ) %>%
   plotly::add_annotations(
-    x = as.Date("2020-03-11"),
+    x = as.Date("2020-03-06"),
     y = 3,
     text = paste("First death"),
     xref = "x",
@@ -175,12 +175,14 @@ plotly::plot_ly(data = df_daily) %>%
     ay = -90
   ) %>%
   plotly::add_annotations(
-    x = as.Date("2020-03-18"),
+    x = as.Date("2020-03-06"),
     y = 14,
     text = paste(
-      "New containment",
+      "Limiting social",
       "<br>",
-      "measures"
+      "contacts in",
+      "<br>",
+      "North Brabant"
     ),
     xref = "x",
     yref = "y",
@@ -191,6 +193,82 @@ plotly::plot_ly(data = df_daily) %>%
     ax = -10,
     ay = -90
   ) %>%
+  plotly::add_annotations(
+    x = as.Date("2020-03-09"),
+    y = 14,
+    text = paste(
+      "New containment",
+      "<br>",
+      "measure: no",
+      "<br>",
+      "handshakes"
+    ),
+    xref = "x",
+    yref = "y",
+    arrowhead = 5,
+    arrowhead = 3,
+    arrowsize = 1,
+    showarrow = TRUE,
+    ax = -10,
+    ay = -90
+  ) %>%
+  plotly::add_annotations(
+    x = as.Date("2020-03-12"),
+    y = 14,
+    text = paste(
+      "Limiting social",
+      "<br>",
+      "contacts in",
+      "<br>",
+      "whole country"
+    ),
+    xref = "x",
+    yref = "y",
+    arrowhead = 5,
+    arrowhead = 3,
+    arrowsize = 1,
+    showarrow = TRUE,
+    ax = -10,
+    ay = -90
+  )  %>%
+  plotly::add_annotations(
+    x = as.Date("2020-03-15"),
+    y = 14,
+    text = paste(
+      "New containment",
+      "<br>",
+      "measures until",
+      "<br>",
+      "April 6th"
+    ),
+    xref = "x",
+    yref = "y",
+    arrowhead = 5,
+    arrowhead = 3,
+    arrowsize = 1,
+    showarrow = TRUE,
+    ax = -10,
+    ay = -90
+  ) %>%
+  plotly::add_annotations(
+    x = as.Date("2020-03-19"),
+    y = 14,
+    text = paste(
+      "Visits to",
+      "<br>",
+      "nursing homes",
+      "<br>",
+      "not allowed"
+    ),
+    xref = "x",
+    yref = "y",
+    arrowhead = 5,
+    arrowhead = 3,
+    arrowsize = 1,
+    showarrow = TRUE,
+    ax = -10,
+    ay = -90
+  )  %>%
   plotly::layout(
     title = "",
     yaxis = list(title = "Cumulative number of cases"),
@@ -227,6 +305,13 @@ daily_confirmed %>%
   plotly::plot_ly() %>%
   plotly::add_trace(
     x = ~date,
+    y = ~Netherlands,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Netherlands"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
     y = ~Belgium,
     type = "scatter",
     mode = "lines+markers",
@@ -234,17 +319,10 @@ daily_confirmed %>%
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~France,
+    y = ~Germany,
     type = "scatter",
     mode = "lines+markers",
-    name = "France"
-  ) %>%
-  plotly::add_trace(
-    x = ~date,
-    y = ~Spain,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Spain"
+    name = "Germany"
   ) %>%
   plotly::add_trace(
     x = ~date,
@@ -277,10 +355,10 @@ daily_confirmed %>%
 ```{r daily_summary}
 df_EU <- coronavirus %>%
   # dplyr::filter(date == max(date)) %>%
-  dplyr::filter(Country.Region == "Belgium" |
-    Country.Region == "France" |
-    Country.Region == "Italy" |
-    Country.Region == "Spain") %>%
+  dplyr::filter(Country.Region == "Netherlands" |
+    Country.Region == "Belgium" |
+    Country.Region == "Germany" |
+    Country.Region == "Italy") %>%
   dplyr::group_by(Country.Region, type) %>%
   dplyr::summarise(total = sum(cases)) %>%
   tidyr::pivot_wider(
@@ -331,68 +409,12 @@ plotly::plot_ly(
 ```
 
 
-Map
-=======================================================================
-
-### **World map of cases** (*use + and - icons to zoom in/out*)
-
-```{r}
-# map tab added by Art Steinmetz
-library(leaflet)
-library(leafpop)
-library(purrr)
-cv_data_for_plot <- coronavirus %>%
-  # dplyr::filter(Country.Region == "Belgium") %>%
-  dplyr::filter(cases > 0) %>%
-  dplyr::group_by(Country.Region, Province.State, Lat, Long, type) %>%
-  dplyr::summarise(cases = sum(cases)) %>%
-  dplyr::mutate(log_cases = 2 * log(cases)) %>%
-  dplyr::ungroup()
-cv_data_for_plot.split <- cv_data_for_plot %>% split(cv_data_for_plot$type)
-pal <- colorFactor(c("orange", "red", "green"), domain = c("confirmed", "death", "recovered"))
-map_object <- leaflet() %>% addProviderTiles(providers$Stamen.Toner)
-names(cv_data_for_plot.split) %>%
-  purrr::walk(function(df) {
-    map_object <<- map_object %>%
-      addCircleMarkers(
-        data = cv_data_for_plot.split[[df]],
-        lng = ~Long, lat = ~Lat,
-        #                 label=~as.character(cases),
-        color = ~ pal(type),
-        stroke = FALSE,
-        fillOpacity = 0.8,
-        radius = ~log_cases,
-        popup = leafpop::popupTable(cv_data_for_plot.split[[df]],
-          feature.id = FALSE,
-          row.numbers = FALSE,
-          zcol = c("type", "cases", "Country.Region", "Province.State")
-        ),
-        group = df,
-        #                 clusterOptions = markerClusterOptions(removeOutsideVisibleBounds = F),
-        labelOptions = labelOptions(
-          noHide = F,
-          direction = "auto"
-        )
-      )
-  })
-
-map_object %>%
-  addLayersControl(
-    overlayGroups = names(cv_data_for_plot.split),
-    options = layersControlOptions(collapsed = FALSE)
-  )
-```
-
-
-
-
-
 About
 =======================================================================
 
-**The Coronavirus Dashboard: the case of Belgium**
+**The Coronavirus Dashboard: the case of Netherlands**
 
-This Coronavirus dashboard: the case of Belgium provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic for Belgium. This dashboard is built with R using the R Makrdown framework and was adapted from this [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/){target="_blank"} by Rami Krispin.
+This dashboard provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic for the Netherlands. It is built with R using the R Makrdown framework and was adapted from [The Coronavirus Dashboard: the case of Belgium](https://github.com/AntoineSoetewey/coronavirus_dashboard) by Antoine Soetewey, which is an adaptation of the original [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/){target="_blank"} by Rami Krispin.
 
 **Code**
 
@@ -400,7 +422,7 @@ The code behind this dashboard is available on [GitHub](https://github.com/Antoi
 
 **Data**
 
-The input data for this dashboard is the dataset available from the [`{coronavirus}`](https://github.com/RamiKrispin/coronavirus){target="_blank"} R package. Make sure to download the development version of the package to have the latest data:
+The code behind this dashboard is available on [GitHub](https://github.com/pjastam/coronavirus_dashboard){target="_blank"}. Make sure to download the development version of the package to have the latest data:
 
 ```
 install.packages("devtools")
@@ -413,12 +435,8 @@ The raw data is pulled from the Johns Hopkins University Center for Systems Scie
 
 **Contact**
 
-For any question or feedback, you can [contact me](https://www.statsandr.com/contact/). More information about this dashboard can be found in this [article](https://www.statsandr.com/blog/how-to-create-a-simple-coronavirus-dashboard-specific-to-your-country-in-r/).
+For any question or feedback, you can contact me at my GitHub mail address or send me a direct message on Twitter @pjastam. More information about this dashboard can be found in this [article](https://www.statsandr.com/blog/how-to-create-a-simple-coronavirus-dashboard-specific-to-your-country-in-r/).
 
 **Update**
 
 The data is as of `r format(max(coronavirus$date), "%A %B %d, %Y")` and the dashboard has been updated on `r format(Sys.time(), "%A %B %d, %Y")`.
-
-<br>
-
-*Go back to [www.statsandr.com](https://www.statsandr.com/) (blog) or [www.antoinesoetewey.com](https://www.antoinesoetewey.com/) (personal website)*.
