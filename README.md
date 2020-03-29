@@ -4,7 +4,7 @@
 **The Coronavirus Dashboard: the case of the Netherlands**
 
 [The Coronavirus Dashboard: the case of the
-Netherlands](https://pjastam.shinyapps.io/coronavirus_dashboard/)
+Netherlands](https://pietstam.nl/coronavirus_dashboard/)
 provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV)
 epidemic for the Netherlands. It is built with R using the R Markdown
 framework and is Shiny version of the
