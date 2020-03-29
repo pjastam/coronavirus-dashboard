@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 
 **The Coronavirus Dashboard: the case of the Netherlands**
 
-This dashboard provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic for the Netherlands. It is built with R using the R Makrdown framework and was adapted from [The Coronavirus Dashboard: the case of Belgium](https://github.com/AntoineSoetewey/coronavirus_dashboard) by Antoine Soetewey, which is an adaptation of the original [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/){target="_blank"} by Rami Krispin.
+[The Coronavirus Dashboard: the case of the Netherlands](https://pjastam.shinyapps.io/coronavirus_dashboard/) provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic for the Netherlands. It is built with R using the R Markdown framework and is Shiny version of the [dashboard](https://www.antoinesoetewey.com/files/coronavirus-dashboard.html) by Antoine Soetewey, who uses data from Belgium. His dashboard is an adaptation of the original [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/){target="_blank"} by Rami Krispin.
 
 **Code**
 
@@ -25,7 +25,7 @@ The input data for this dashboard is from the [`{coronavirus}`](https://github.c
 
 **Contact**
 
-For any question or feedback, you can contact me at my GitHub mail address or send me a direct message on Twitter @pjastam. More information about this dashboard can be found in this [article](https://www.statsandr.com/blog/how-to-create-a-simple-coronavirus-dashboard-specific-to-your-country-in-r/).
+For any question or feedback, you can either open an <a href="https://github.com/pjastam/coronavirus_dashboard/issues">issue</a> or contact me on <a href="https://twitter.com/pjastam">Twitter</a>. More information about this dashboard can be found in this [article](https://www.statsandr.com/blog/how-to-create-a-simple-coronavirus-dashboard-specific-to-your-country-in-r/).
 
 **Update**
 
