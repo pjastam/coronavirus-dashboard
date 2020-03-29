@@ -4,15 +4,25 @@
 **The Coronavirus Dashboard: the case of the Netherlands**
 
 [The Coronavirus Dashboard: the case of the
-Netherlands](https://pietstam.nl/coronavirus_dashboard/)
-provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV)
-epidemic for the Netherlands. It is built with R using the R Markdown
-framework and is Shiny version of the
+Netherlands](https://pietstam.nl/coronavirus_dashboard/) provides an
+overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic for
+the Netherlands. It is built with R using the R Markdown framework and
+is based on the
 [dashboard](https://www.antoinesoetewey.com/files/coronavirus-dashboard.html)
 by Antoine Soetewey, who uses data from Belgium. His dashboard is an
 adaptation of the original
 [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/) by
 Rami Krispin.
+
+**New feature**
+
+We denoted the ‘Daily new confirmed cases’ on the Comparison tab of the
+dashboard in terms of 100.000 inhabitants living in the respective
+countries. The total number of inhabitants are copied from the
+[Wikipedia](https://en.wikipedia.org/wiki/Main_Page) [List of countries
+and dependencies by
+population](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population)
+(visited at 2020-03-29).
 
 **Code**
 
@@ -38,4 +48,4 @@ information about this dashboard can be found in this
 
 **Update**
 
-The dashboard has been updated on Sunday March 29, 2020.
+The dashboard has been updated on zondag maart 29, 2020.
