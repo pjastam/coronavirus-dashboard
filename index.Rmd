@@ -30,9 +30,11 @@ active_color <- "#1f77b4"
 recovered_color <- "forestgreen"
 death_color <- "red"
 #------------------ Data ------------------
+# Note that we exclude the Dutch Carribean islands 
 df <- coronavirus %>%
   # dplyr::filter(date == max(date)) %>%
   dplyr::filter(Country.Region == "Netherlands") %>%
+  dplyr::filter(Province.State == "") %>%
   dplyr::group_by(Country.Region, type) %>%
   dplyr::summarise(total = sum(cases)) %>%
   tidyr::pivot_wider(
@@ -49,8 +51,10 @@ df <- coronavirus %>%
   dplyr::mutate(country = trimws(country)) %>%
   dplyr::mutate(country = factor(country, levels = country))
 
+# Note that we exclude the Dutch Carribean islands 
 df_daily <- coronavirus %>%
   dplyr::filter(Country.Region == "Netherlands") %>%
+  dplyr::filter(Province.State == "") %>%
   dplyr::group_by(date, type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(
@@ -125,7 +129,7 @@ valueBox(
 Row
 -----------------------------------------------------------------------
 
-### **Daily cumulative cases by type** (Netherlands only)
+### **Daily cumulative cases by type** (Netherlands only, data of `r format(max(coronavirus$date), "%A %B %d, %Y")`)
     
 ```{r}
 plotly::plot_ly(data = df_daily) %>%
@@ -172,18 +176,16 @@ plotly::plot_ly(data = df_daily) %>%
     arrowhead = 3,
     arrowsize = 1,
     showarrow = TRUE,
-    ax = -90,
-    ay = -90
+    ax = -80,
+    ay = -45
   ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-06"),
     y = 14,
     text = paste(
-      "Limiting social",
-      "<br>",
-      "contacts in",
-      "<br>",
-      "North Brabant"
+      "Stay at home",
+      "<BR>",
+      "Brabant"
     ),
     xref = "x",
     yref = "y",
@@ -191,18 +193,14 @@ plotly::plot_ly(data = df_daily) %>%
     arrowhead = 3,
     arrowsize = 1,
     showarrow = TRUE,
-    ax = -10,
+    ax = -45,
     ay = -90
   ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-09"),
     y = 14,
     text = paste(
-      "New containment",
-      "<br>",
-      "measure: no",
-      "<br>",
-      "handshakes"
+      "No handshakes"
     ),
     xref = "x",
     yref = "y",
@@ -211,16 +209,14 @@ plotly::plot_ly(data = df_daily) %>%
     arrowsize = 1,
     showarrow = TRUE,
     ax = -10,
-    ay = -90
+    ay = -45
   ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-12"),
     y = 14,
     text = paste(
-      "Limiting social",
-      "<br>",
-      "contacts in",
-      "<br>",
+      "Stay at home",
+      "<BR>",
       "whole country"
     ),
     xref = "x",
@@ -236,11 +232,9 @@ plotly::plot_ly(data = df_daily) %>%
     x = as.Date("2020-03-15"),
     y = 14,
     text = paste(
-      "New containment",
+      "April 6th",
       "<br>",
-      "measures until",
-      "<br>",
-      "April 6th"
+      "measure"
     ),
     xref = "x",
     yref = "y",
@@ -248,18 +242,16 @@ plotly::plot_ly(data = df_daily) %>%
     arrowhead = 3,
     arrowsize = 1,
     showarrow = TRUE,
-    ax = -10,
-    ay = -90
+    ax = 20,
+    ay = -110
   ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-19"),
     y = 14,
     text = paste(
-      "Visits to",
+      "Nursing homes",
       "<br>",
-      "nursing homes",
-      "<br>",
-      "not allowed"
+      "closed"
     ),
     xref = "x",
     yref = "y",
@@ -267,8 +259,8 @@ plotly::plot_ly(data = df_daily) %>%
     arrowhead = 3,
     arrowsize = 1,
     showarrow = TRUE,
-    ax = -10,
-    ay = -90
+    ax = 90,
+    ay = -80
   )  %>%
   plotly::layout(
     title = "",
@@ -415,7 +407,16 @@ About
 
 **The Coronavirus Dashboard: the case of Netherlands**
 
-This dashboard provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic for the Netherlands. It is built with R using the R Makrdown framework and was adapted from [The Coronavirus Dashboard: the case of Belgium](https://github.com/AntoineSoetewey/coronavirus_dashboard) by Antoine Soetewey, which is an adaptation of the original [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/){target="_blank"} by Rami Krispin.
+[The Coronavirus Dashboard: the case of the
+Netherlands](https://pjastam.shinyapps.io/coronavirus_dashboard/)
+provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV)
+epidemic for the Netherlands. It is built with R using the R Markdown
+framework and is Shiny version of the
+[dashboard](https://www.antoinesoetewey.com/files/coronavirus-dashboard.html)
+by Antoine Soetewey, who uses data from Belgium. His dashboard is an
+adaptation of the original
+[dashboard](https://ramikrispin.github.io/coronavirus_dashboard/) by
+Rami Krispin.
 
 **Code**
 
