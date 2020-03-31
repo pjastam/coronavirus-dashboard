@@ -298,13 +298,6 @@ daily_confirmed %>%
   plotly::plot_ly() %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Netherlands*100000/17449631,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Netherlands"
-  ) %>%
-  plotly::add_trace(
-    x = ~date,
     y = ~Germany*100000/83149300,
     type = "scatter",
     mode = "lines+markers",
@@ -312,10 +305,10 @@ daily_confirmed %>%
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Spain*100000/47100396,
+    y = ~Netherlands*100000/17449631,
     type = "scatter",
     mode = "lines+markers",
-    name = "Spain"
+    name = "Netherlands"
   ) %>%
   plotly::add_trace(
     x = ~date,
@@ -323,6 +316,13 @@ daily_confirmed %>%
     type = "scatter",
     mode = "lines+markers",
     name = "Italy"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Spain*100000/47100396,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Spain"
   ) %>%
   plotly::layout(
     title = "",
