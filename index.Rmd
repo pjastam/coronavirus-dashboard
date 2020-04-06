@@ -76,7 +76,146 @@ df_daily <- coronavirus %>%
 df1 <- coronavirus %>% dplyr::filter(date == max(date))
 ```
 
-Summary
+Country comparison
+=======================================================================
+
+
+Column {data-width=400}
+-------------------------------------
+
+
+### **Daily new deaths (per 100.000 inhabitants)**
+    
+```{r}
+daily_death <- coronavirus %>%
+  dplyr::filter(type == "death") %>%
+  dplyr::filter(date >= "2020-02-29") %>%
+  dplyr::mutate(country = Country.Region) %>%
+  dplyr::group_by(date, country) %>%
+  dplyr::summarise(total = sum(cases)) %>%
+  dplyr::ungroup() %>%
+  tidyr::pivot_wider(names_from = country, values_from = total)
+
+#----------------------------------------
+# Plotting the data
+
+daily_death %>%
+  plotly::plot_ly() %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Germany*100000/83149300,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Germany"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Netherlands*100000/17452431,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Netherlands"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Italy*100000/60238522,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Italy"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Spain*100000/47100396,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Spain"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Belgium*100000/11524454,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Belgium"
+  ) %>%
+  plotly::layout(
+    title = "",
+    legend = list(x = 0.1, y = 0.9),
+    yaxis = list(title = "Number of new deaths (per 100.000 inhabitants)", hoverformat = '.2f'),
+    xaxis = list(title = "Date"),
+    # paper_bgcolor = "black",
+    # plot_bgcolor = "black",
+    # font = list(color = 'white'),
+    hovermode = "compare",
+    margin = list(
+      # l = 60,
+      # r = 40,
+      b = 10,
+      t = 10,
+      pad = 2
+    )
+  )
+```
+ 
+### **Cases distribution by type**
+
+```{r daily_summary}
+df_EU <- coronavirus %>%
+  # dplyr::filter(date == max(date)) %>%
+  dplyr::filter(Country.Region == "Netherlands" |
+    Country.Region == "Germany" |
+    Country.Region == "Spain" |
+    Country.Region == "Italy" |
+    Country.Region == "Belgium") %>%
+  dplyr::group_by(Country.Region, type) %>%
+  dplyr::summarise(total = sum(cases)) %>%
+  tidyr::pivot_wider(
+    names_from = type,
+    values_from = total
+  ) %>%
+  # dplyr::mutate(unrecovered = confirmed - ifelse(is.na(recovered), 0, recovered) - ifelse(is.na(death), 0, death)) %>%
+  dplyr::mutate(unrecovered = confirmed - ifelse(is.na(death), 0, death)) %>%
+  dplyr::arrange(confirmed) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(country = dplyr::if_else(Country.Region == "United Arab Emirates", "UAE", Country.Region)) %>%
+  dplyr::mutate(country = dplyr::if_else(country == "Mainland China", "China", country)) %>%
+  dplyr::mutate(country = dplyr::if_else(country == "North Macedonia", "N.Macedonia", country)) %>%
+  dplyr::mutate(country = trimws(country)) %>%
+  dplyr::mutate(country = factor(country, levels = country))
+
+plotly::plot_ly(
+  data = df_EU,
+  x = ~country,
+  # y = ~unrecovered,
+  y = ~ confirmed,
+  # text =  ~ confirmed,
+  # textposition = 'auto',
+  type = "bar",
+  name = "Confirmed",
+  marker = list(color = active_color)
+) %>%
+  plotly::add_trace(
+    y = ~death,
+    # text =  ~ death,
+    # textposition = 'auto',
+    name = "Death",
+    marker = list(color = death_color)
+  ) %>%
+  plotly::layout(
+    barmode = "stack",
+    yaxis = list(title = "Total cases"),
+    xaxis = list(title = ""),
+    hovermode = "compare",
+    margin = list(
+      # l = 60,
+      # r = 40,
+      b = 10,
+      t = 10,
+      pad = 2
+    )
+  )
+```
+
+
+Netherlands
 =======================================================================
 
 Row {data-width=400}
@@ -270,145 +409,6 @@ plotly::plot_ly(data = df_daily) %>%
     hovermode = "compare"
   )
 ```
-
-Comparison
-=======================================================================
-
-
-Column {data-width=400}
--------------------------------------
-
-
-### **Daily new deaths (per 100.000 inhabitants)**
-    
-```{r}
-daily_death <- coronavirus %>%
-  dplyr::filter(type == "death") %>%
-  dplyr::filter(date >= "2020-02-29") %>%
-  dplyr::mutate(country = Country.Region) %>%
-  dplyr::group_by(date, country) %>%
-  dplyr::summarise(total = sum(cases)) %>%
-  dplyr::ungroup() %>%
-  tidyr::pivot_wider(names_from = country, values_from = total)
-
-#----------------------------------------
-# Plotting the data
-
-daily_death %>%
-  plotly::plot_ly() %>%
-  plotly::add_trace(
-    x = ~date,
-    y = ~Netherlands*100000/17452431,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Netherlands"
-  ) %>%
-  plotly::add_trace(
-    x = ~date,
-    y = ~Germany*100000/83149300,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Germany"
-  ) %>%
-  plotly::add_trace(
-    x = ~date,
-    y = ~Spain*100000/47100396,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Spain"
-  ) %>%
-  plotly::add_trace(
-    x = ~date,
-    y = ~Italy*100000/60238522,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Italy"
-  ) %>%
-  plotly::add_trace(
-    x = ~date,
-    y = ~Belgium*100000/11524454,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Belgium"
-  ) %>%
-  plotly::layout(
-    title = "",
-    legend = list(x = 0.1, y = 0.9),
-    yaxis = list(title = "Number of new deaths (per 100.000 inhabitants)", hoverformat = '.2f'),
-    xaxis = list(title = "Date"),
-    # paper_bgcolor = "black",
-    # plot_bgcolor = "black",
-    # font = list(color = 'white'),
-    hovermode = "compare",
-    margin = list(
-      # l = 60,
-      # r = 40,
-      b = 10,
-      t = 10,
-      pad = 2
-    )
-  )
-```
- 
-### **Cases distribution by type**
-
-```{r daily_summary}
-df_EU <- coronavirus %>%
-  # dplyr::filter(date == max(date)) %>%
-  dplyr::filter(Country.Region == "Netherlands" |
-    Country.Region == "Germany" |
-    Country.Region == "Spain" |
-    Country.Region == "Italy" |
-    Country.Region == "Belgium") %>%
-  dplyr::group_by(Country.Region, type) %>%
-  dplyr::summarise(total = sum(cases)) %>%
-  tidyr::pivot_wider(
-    names_from = type,
-    values_from = total
-  ) %>%
-  # dplyr::mutate(unrecovered = confirmed - ifelse(is.na(recovered), 0, recovered) - ifelse(is.na(death), 0, death)) %>%
-  dplyr::mutate(unrecovered = confirmed - ifelse(is.na(death), 0, death)) %>%
-  dplyr::arrange(confirmed) %>%
-  dplyr::ungroup() %>%
-  dplyr::mutate(country = dplyr::if_else(Country.Region == "United Arab Emirates", "UAE", Country.Region)) %>%
-  dplyr::mutate(country = dplyr::if_else(country == "Mainland China", "China", country)) %>%
-  dplyr::mutate(country = dplyr::if_else(country == "North Macedonia", "N.Macedonia", country)) %>%
-  dplyr::mutate(country = trimws(country)) %>%
-  dplyr::mutate(country = factor(country, levels = country))
-
-plotly::plot_ly(
-  data = df_EU,
-  x = ~country,
-  # y = ~unrecovered,
-  y = ~ confirmed,
-  # text =  ~ confirmed,
-  # textposition = 'auto',
-  type = "bar",
-  name = "Confirmed",
-  marker = list(color = active_color)
-) %>%
-  plotly::add_trace(
-    y = ~death,
-    # text =  ~ death,
-    # textposition = 'auto',
-    name = "Death",
-    marker = list(color = death_color)
-  ) %>%
-  plotly::layout(
-    barmode = "stack",
-    yaxis = list(title = "Total cases"),
-    xaxis = list(title = ""),
-    hovermode = "compare",
-    margin = list(
-      # l = 60,
-      # r = 40,
-      b = 10,
-      t = 10,
-      pad = 2
-    )
-  )
-```
-
 
 About
 =======================================================================
