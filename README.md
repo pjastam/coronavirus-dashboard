@@ -16,13 +16,18 @@ Rami Krispin.
 
 **New feature**
 
-We denoted the ‘Daily new confirmed cases’ on the Comparison tab of the
-dashboard in terms of 100.000 inhabitants living in the respective
-countries. The total number of inhabitants are copied from the
-[Wikipedia](https://en.wikipedia.org/wiki/Main_Page) [List of countries
-and dependencies by
+\[2020-04-06\] We compare the number of deaths instead of the number of
+infected cases on the comparison tab of the dashboard. The reason is
+that we assume that bias in the country comparison because of
+measurement errors is smaller in this case.
+
+\[2020-03-29\] We denoted the numbers in the left figure on the
+Comparison tab of the dashboard in terms of 100.000 inhabitants living
+in the respective countries. The total number of inhabitants are copied
+from the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) [List of
+countries and dependencies by
 population](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population)
-(visited at 2020-03-29).
+(visited at 2020-04-06).
 
 **Code**
 
@@ -48,4 +53,4 @@ information about this dashboard can be found in this
 
 **Update**
 
-The dashboard has been updated on zondag maart 29, 2020.
+The dashboard has been updated on maandag april 06, 2020.
