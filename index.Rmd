@@ -298,7 +298,7 @@ daily_confirmed %>%
   plotly::plot_ly() %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Netherlands*100000/17449631,
+    y = ~Netherlands*100000/17452431,
     type = "scatter",
     mode = "lines+markers",
     name = "Netherlands"
@@ -319,10 +319,17 @@ daily_confirmed %>%
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Italy*100000/60243406,
+    y = ~Italy*100000/60238522,
     type = "scatter",
     mode = "lines+markers",
     name = "Italy"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Belgium*100000/11524454,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Belgium"
   ) %>%
   plotly::layout(
     title = "",
@@ -351,7 +358,8 @@ df_EU <- coronavirus %>%
   dplyr::filter(Country.Region == "Netherlands" |
     Country.Region == "Germany" |
     Country.Region == "Spain" |
-    Country.Region == "Italy") %>%
+    Country.Region == "Italy" |
+    Country.Region == "Belgium") %>%
   dplyr::group_by(Country.Region, type) %>%
   dplyr::summarise(total = sum(cases)) %>%
   tidyr::pivot_wider(
@@ -418,9 +426,11 @@ adaptation of the original
 [dashboard](https://ramikrispin.github.io/coronavirus_dashboard/) by
 Rami Krispin.
 
-**New feature**
+**New features**
 
-We denoted the 'Daily new confirmed cases' on the Comparison tab of the dashboard in terms of 100.000 inhabitants living in the respective countries. The total number of inhabitants are copied from the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) [List of countries and dependencies by population](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population) (visited at 2020-03-29).
+[2020-04-06] We compare the number of deaths instead of the number of infected cases on the comparison tab of the dashboard. The reason is that we assume that bias in the country comparison because of measurement errors is smaller in this case.
+
+[2020-03-29] We denoted the numbers in the left figure on the Comparison tab of the dashboard in terms of 100.000 inhabitants living in the respective countries. The total number of inhabitants are copied from the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) [List of countries and dependencies by population](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population) (visited at 2020-04-06).
 
 **Code**
 
