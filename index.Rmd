@@ -298,39 +298,31 @@ daily_death %>%
   plotly::plot_ly() %>%
   plotly::add_trace(
     x = ~date,
-<<<<<<< HEAD
     y = ~Netherlands*100000/17452431,
-=======
-    y = ~Germany*100000/83149300,
->>>>>>> be52022c173833fc8d72a51767a3d870167c3ece
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Germany"
-  ) %>%
-  plotly::add_trace(
-    x = ~date,
-    y = ~Netherlands*100000/17449631,
     type = "scatter",
     mode = "lines+markers",
     name = "Netherlands"
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Italy*100000/60243406,
+    y = ~Germany*100000/83149300,
     type = "scatter",
     mode = "lines+markers",
-    name = "Italy"
+    name = "Germany"
   ) %>%
   plotly::add_trace(
     x = ~date,
-<<<<<<< HEAD
-    y = ~Italy*100000/60238522,
-=======
     y = ~Spain*100000/47100396,
->>>>>>> be52022c173833fc8d72a51767a3d870167c3ece
     type = "scatter",
     mode = "lines+markers",
     name = "Spain"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Italy*100000/60238522,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Italy"
   ) %>%
   plotly::add_trace(
     x = ~date,
