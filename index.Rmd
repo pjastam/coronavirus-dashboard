@@ -55,6 +55,7 @@ df <- coronavirus %>%
 df_daily <- coronavirus %>%
   dplyr::filter(Country.Region == "Netherlands") %>%
   dplyr::filter(Province.State == "") %>%
+  dplyr::filter(date >= "2020-02-27") %>%
   dplyr::group_by(date, type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(
@@ -84,15 +85,17 @@ Column {data-width=400}
 -------------------------------------
 
 
-### **Daily new deaths (per 100.000 inhabitants)**
+### **Cumulative number of deaths** (per million inhabitants, data of `r format(max(coronavirus$date), "%A %B %d, %Y")`)
     
 ```{r}
 daily_death <- coronavirus %>%
   dplyr::filter(type == "death") %>%
-  dplyr::filter(date >= "2020-02-29") %>%
+  dplyr::filter(date >= "2020-02-27") %>%
   dplyr::mutate(country = Country.Region) %>%
   dplyr::group_by(date, country) %>%
   dplyr::summarise(total = sum(cases)) %>%
+  dplyr::group_by(country) %>% 
+  dplyr::mutate(total = cumsum(total)) %>% 
   dplyr::ungroup() %>%
   tidyr::pivot_wider(names_from = country, values_from = total)
 
@@ -103,43 +106,43 @@ daily_death %>%
   plotly::plot_ly() %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Germany*100000/83149300,
+    y = ~Germany*1000000/83149300,
     type = "scatter",
     mode = "lines+markers",
     name = "Germany"
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Netherlands*100000/17452431,
+    y = ~Netherlands*1000000/17452431,
     type = "scatter",
     mode = "lines+markers",
     name = "Netherlands"
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Italy*100000/60238522,
+    y = ~Italy*1000000/60238522,
     type = "scatter",
     mode = "lines+markers",
     name = "Italy"
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Spain*100000/47100396,
+    y = ~Spain*1000000/47100396,
     type = "scatter",
     mode = "lines+markers",
     name = "Spain"
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~Belgium*100000/11524454,
+    y = ~Belgium*1000000/11524454,
     type = "scatter",
     mode = "lines+markers",
     name = "Belgium"
   ) %>%
   plotly::layout(
     title = "",
-    legend = list(x = 0.1, y = 0.9),
-    yaxis = list(title = "Number of new deaths (per 100.000 inhabitants)", hoverformat = '.2f'),
+    legend = list(x = 0.05, y = 0.95),
+    yaxis = list(title = "Logarithmic scale", hoverformat = ',.0f', tickformat = ',.0f', type = "log"),
     xaxis = list(title = "Date"),
     # paper_bgcolor = "black",
     # plot_bgcolor = "black",
@@ -154,8 +157,8 @@ daily_death %>%
     )
   )
 ```
- 
-### **Cases distribution by type**
+
+### **Cases distribution by type** (absolute numbers, data of `r format(max(coronavirus$date), "%A %B %d, %Y")`)
 
 ```{r daily_summary}
 df_EU <- coronavirus %>%
@@ -201,7 +204,7 @@ plotly::plot_ly(
   ) %>%
   plotly::layout(
     barmode = "stack",
-    yaxis = list(title = "Total cases"),
+    yaxis = list(title = "Total cases", hoverformat = ',.0f', tickformat = ',.0f'),
     xaxis = list(title = ""),
     hovermode = "compare",
     margin = list(
@@ -268,7 +271,7 @@ valueBox(
 Row
 -----------------------------------------------------------------------
 
-### **Daily cumulative cases by type** (Netherlands only, data of `r format(max(coronavirus$date), "%A %B %d, %Y")`)
+### **Cumulative cases by type** (Netherlands only, data of `r format(max(coronavirus$date), "%A %B %d, %Y")`)
     
 ```{r}
 plotly::plot_ly(data = df_daily) %>%
@@ -292,35 +295,35 @@ plotly::plot_ly(data = df_daily) %>%
     line = list(color = death_color),
     marker = list(color = death_color)
   ) %>%
-  plotly::add_annotations(
-    x = as.Date("2020-02-27"),
-    y = 1,
-    text = paste("First case"),
-    xref = "x",
-    yref = "y",
-    arrowhead = 5,
-    arrowhead = 3,
-    arrowsize = 1,
-    showarrow = TRUE,
-    ax = -10,
-    ay = -90
-  ) %>%
+#  plotly::add_annotations(
+#    x = as.Date("2020-02-27"),
+#    y = 0,
+#    text = paste("First case"),
+#    xref = "x",
+#    yref = "y",
+#    arrowhead = 5,
+#    arrowhead = 3,
+#    arrowsize = 1,
+#    showarrow = TRUE,
+#    ax = -10,
+#    ay = -90
+#  ) %>%
+#  plotly::add_annotations(
+#    x = as.Date("2020-03-06"),
+#    y = 0,
+#    text = paste("First death"),
+#    xref = "x",
+#    yref = "y",
+#    arrowhead = 5,
+#    arrowhead = 3,
+#    arrowsize = 1,
+#    showarrow = TRUE,
+#    ax = -80,
+#    ay = -45
+#  ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-06"),
-    y = 3,
-    text = paste("First death"),
-    xref = "x",
-    yref = "y",
-    arrowhead = 5,
-    arrowhead = 3,
-    arrowsize = 1,
-    showarrow = TRUE,
-    ax = -80,
-    ay = -45
-  ) %>%
-  plotly::add_annotations(
-    x = as.Date("2020-03-06"),
-    y = 14,
+    y = 0,
     text = paste(
       "Stay at home",
       "<BR>",
@@ -337,7 +340,7 @@ plotly::plot_ly(data = df_daily) %>%
   ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-09"),
-    y = 14,
+    y = 0,
     text = paste(
       "No handshakes"
     ),
@@ -352,7 +355,7 @@ plotly::plot_ly(data = df_daily) %>%
   ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-12"),
-    y = 14,
+    y = 0,
     text = paste(
       "Stay at home",
       "<BR>",
@@ -369,7 +372,7 @@ plotly::plot_ly(data = df_daily) %>%
   )  %>%
   plotly::add_annotations(
     x = as.Date("2020-03-15"),
-    y = 14,
+    y = 0,
     text = paste(
       "April 6th",
       "<br>",
@@ -386,7 +389,7 @@ plotly::plot_ly(data = df_daily) %>%
   ) %>%
   plotly::add_annotations(
     x = as.Date("2020-03-19"),
-    y = 14,
+    y = 0,
     text = paste(
       "Nursing homes",
       "<br>",
@@ -398,12 +401,12 @@ plotly::plot_ly(data = df_daily) %>%
     arrowhead = 3,
     arrowsize = 1,
     showarrow = TRUE,
-    ax = 90,
+    ax = 20,
     ay = -45
   )  %>%
   plotly::add_annotations(
     x = as.Date("2020-03-31"),
-    y = 14,
+    y = 0,
     text = paste(
       "April 28th",
       "<br>",
@@ -418,11 +421,30 @@ plotly::plot_ly(data = df_daily) %>%
     ax = 0,
     ay = -90
   ) %>%
+  plotly::add_annotations(
+    x = as.Date("2020-04-21"),
+    y = 0,
+    text = paste(
+      "Extended",
+      "<br>",
+      "May 11th",
+      "<br>",
+      "measure"
+    ),
+    xref = "x",
+    yref = "y",
+    arrowhead = 5,
+    arrowhead = 3,
+    arrowsize = 1,
+    showarrow = TRUE,
+    ax = 0,
+    ay = -90
+  ) %>%
   plotly::layout(
     title = "",
-    yaxis = list(title = "Cumulative number of cases"),
+    yaxis = list(title = "Logarithmic scale", type = "log", hoverformat = ',.0f', tickformat = ',.0f'),
     xaxis = list(title = "Date"),
-    legend = list(x = 0.1, y = 0.9),
+    legend = list(x = 0.05, y = 0.95),
     hovermode = "compare"
   )
 ```
@@ -433,7 +455,7 @@ About
 **The Coronavirus Dashboard: the case of Netherlands**
 
 [The Coronavirus Dashboard: the case of the
-Netherlands](https://pietstam.nl/coronavirus_dashboard/)
+Netherlands](https://pietstam.nl/coronavirus-dashboard/)
 provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV)
 epidemic for the Netherlands. It is built with R using the R Markdown
 framework and is based on the
@@ -445,13 +467,15 @@ Rami Krispin.
 
 **New features**
 
+[2020-04-27] We changed the scales of two out of three figures to a logarithmic one. In addition some formatting was done.
+
 [2020-04-06] We compare the number of deaths instead of the number of infected cases on the comparison tab of the dashboard. The reason is that we assume that bias in the country comparison because of measurement errors is smaller in this case.
 
-[2020-03-29] We denoted the numbers in the left figure on the Comparison tab of the dashboard in terms of 100.000 inhabitants living in the respective countries. The total number of inhabitants are copied from the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) [List of countries and dependencies by population](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population) (visited at 2020-04-06).
+[2020-03-29] We denoted the numbers in the left figure on the Comparison tab of the dashboard in terms of 1 million inhabitants living in the respective countries. The total number of inhabitants are copied from the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) [List of countries and dependencies by population](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population) (visited at 2020-04-06).
 
 **Code**
 
-The code behind this dashboard is available on [GitHub](https://github.com/pjastam/coronavirus_dashboard){target="_blank"}.
+The code behind this dashboard is available on [GitHub](https://github.com/pjastam/coronavirus-dashboard){target="_blank"}.
 
 **Data**
 
@@ -468,7 +492,7 @@ The raw data is pulled from the Johns Hopkins University Center for Systems Scie
 
 **Contact**
 
-For any question or feedback, you can either open an <a href="https://github.com/pjastam/coronavirus_dashboard/issues">issue</a> or contact me on <a href="https://twitter.com/pjastam">Twitter</a>. More information about this dashboard can be found in this [article](https://www.statsandr.com/blog/how-to-create-a-simple-coronavirus-dashboard-specific-to-your-country-in-r/).
+For any question or feedback, you can either open an <a href="https://github.com/pjastam/coronavirus-dashboard/issues">issue</a> or contact me on <a href="https://twitter.com/pjastam">Twitter</a>. More information about this dashboard can be found in this [article](https://www.statsandr.com/blog/how-to-create-a-simple-coronavirus-dashboard-specific-to-your-country-in-r/).
 
 **Update**
 
