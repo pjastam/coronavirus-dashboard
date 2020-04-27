@@ -16,6 +16,9 @@ Rami Krispin.
 
 **New feature**
 
+\[2020-04-27\] We changed the scales of two out of three figures to a
+logarithmic one. In addition some formatting was done.
+
 \[2020-04-06\] We compare the number of deaths instead of the number of
 infected cases on the comparison tab of the dashboard. The reason is
 that we assume that bias in the country comparison because of
@@ -53,4 +56,4 @@ information about this dashboard can be found in this
 
 **Update**
 
-The dashboard has been updated on maandag april 06, 2020.
+The dashboard has been updated on Monday April 27, 2020.
