@@ -142,7 +142,7 @@ daily_death %>%
   plotly::layout(
     title = "",
     legend = list(x = 0.05, y = 0.95),
-    yaxis = list(title = "Logarithmic scale", hoverformat = ',.0f', tickformat = ',.0f', type = "log"),
+    yaxis = list(title = "Semilogarithmic scale", hoverformat = ',.0f', tickformat = ',.0f', type = "log", tick0 = 1, dtick = 1),
     xaxis = list(title = "Date"),
     # paper_bgcolor = "black",
     # plot_bgcolor = "black",
@@ -442,7 +442,7 @@ plotly::plot_ly(data = df_daily) %>%
   ) %>%
   plotly::layout(
     title = "",
-    yaxis = list(title = "Logarithmic scale", type = "log", hoverformat = ',.0f', tickformat = ',.0f'),
+    yaxis = list(title = "Semilogarithmic scale", type = "log", tick0 = 1, dtick = 1, hoverformat = ',.0f', tickformat = ',.0f'),
     xaxis = list(title = "Date"),
     legend = list(x = 0.05, y = 0.95),
     hovermode = "compare"
