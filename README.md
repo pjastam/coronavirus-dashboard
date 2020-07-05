@@ -56,4 +56,4 @@ information about this dashboard can be found in this
 
 **Update**
 
-The dashboard has been updated on Monday April 27, 2020.
+The dashboard has been updated on zondag juli 05, 2020.
