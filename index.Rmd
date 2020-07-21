@@ -14,7 +14,7 @@ output:
 #------------------ Packages ------------------
 library(flexdashboard)
 # install.packages("devtools")
-# devtools::install_github("RamiKrispin/coronavirus", force = TRUE)
+devtools::install_github("RamiKrispin/coronavirus", force = TRUE)
 library(coronavirus)
 data(coronavirus)
 update_dataset()
@@ -141,7 +141,7 @@ daily_death %>%
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~'United Kingom',
+    y = ~`United Kingdom`,
     type = "scatter",
     mode = "lines+markers",
     name = "United Kingdom"
