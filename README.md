@@ -16,6 +16,8 @@ Rami Krispin.
 
 **New feature**
 
+\[2020-07-20\] We added France and the UK to the first tab.
+
 \[2020-04-27\] We changed the scales of two out of three figures to a
 logarithmic one. In addition some formatting was done.
 
@@ -56,4 +58,4 @@ information about this dashboard can be found in this
 
 **Update**
 
-The dashboard has been updated on zondag juli 05, 2020.
+The dashboard has been updated on Tuesday July 21, 2020.

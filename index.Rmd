@@ -483,6 +483,8 @@ Rami Krispin.
 
 **New features**
 
+[2020-07-20] We added France and the UK to the first tab.
+
 [2020-04-27] We changed the scales of two out of three figures to a logarithmic one. In addition some formatting was done.
 
 [2020-04-06] We compare the number of deaths instead of the number of infected cases on the comparison tab of the dashboard. The reason is that we assume that bias in the country comparison because of measurement errors is smaller in this case.
