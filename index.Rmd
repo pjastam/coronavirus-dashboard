@@ -141,14 +141,14 @@ daily_death %>%
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~`United Kingdom`,
+    y = ~`United Kingdom`*1000000/66796807,
     type = "scatter",
     mode = "lines+markers",
     name = "United Kingdom"
   ) %>%
   plotly::add_trace(
     x = ~date,
-    y = ~France*1,
+    y = ~France*1000000/67081000,
     type = "scatter",
     mode = "lines+markers",
     name = "France"
